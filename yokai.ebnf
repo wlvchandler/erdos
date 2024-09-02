@@ -1,0 +1,43 @@
+<ws> ::= (" " | "\t" | "\n" | "\r")*
+
+<letter> ::= "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z"
+<digit> ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+<identifier> ::= <letter> (<letter> | <digit> | "_")*
+<number> ::= <digit>+ ("." <digit>+)?
+
+<basic_type> ::= "number" | "vector" | "String" | "Int" | "Boolean" | "Object" | "List" | "Dict"
+<type> ::= <basic_type> | <identifier>
+<type_list> ::= "[" <ws> <type> (<ws> <type>)* <ws> "]"
+
+<channel_flow> ::= <ws> "->" <ws>
+<channel_input> ::= <ws> "<~" <ws>
+<channel_output> ::= <ws> "~>" <ws>
+
+<node_name> ::= <identifier> | "(" <ws> <identifier> <ws> ")" | "[" <ws> <identifier> <ws> "]" | "@" <operator_symbol>
+<input_list> ::= <identifier> (<ws> <identifier>)*
+<output_list> ::= "[" <ws> <type> <ws> "]" | "."
+
+<node_definition> ::= 
+    <node_name> <ws>
+    (<channel_input> <type_list> <ws> <input_list>)?
+    (<channel_output> <output_list>)?
+    <channel_flow> <node_body>
+
+<node_body> ::= <operation> (<channel_flow> <operation>)*
+
+<operation> ::= <expression> | <node_call> | <conditional>
+<expression> ::= <identifier> | <number> | <binary_operation>
+<binary_operation> ::= <expression> <ws> <operator> <ws> <expression>
+<operator> ::= "+" | "-" | "*" | "/"
+<node_call> ::= (<arg_list> <ws>)? <node_name> (<ws> <output_storage>)?
+<arg_list> ::= <expression> (<ws> <expression>)*
+<output_storage> ::= <identifier>
+<conditional> ::= <expression> <channel_flow> <operation> <channel_flow> <operation>
+
+<operator_symbol> ::= "[]" | "="
+
+<struct_definition> ::= 
+    "struct" <ws> <identifier> <ws>
+    (<identifier> <ws> ":" <ws> <type> <ws>)+
+
+<yokai_program> ::= (<ws> (<node_definition> | <struct_definition>))*
