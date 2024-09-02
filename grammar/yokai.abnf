@@ -1,0 +1,62 @@
+; Yokai Language Grammar in ABNF
+
+; Basic elements
+ALPHA = %x41-5A / %x61-7A   ; A-Z / a-z
+DIGIT = %x30-39             ; 0-9
+SP = %x20                   ; space
+HTAB = %x09                 ; horizontal tab
+CR = %x0D                   ; carriage return
+LF = %x0A                   ; line feed
+CRLF = CR LF                ; Internet standard newline
+WSP = SP / HTAB             ; white space
+VCHAR = %x21-7E             ; visible (printing) characters
+
+; Whitespace
+WS = *( WSP / CRLF )
+
+; Identifiers and numbers
+identifier = ALPHA *( ALPHA / DIGIT / "_" )
+number = 1*DIGIT [ "." 1*DIGIT ]
+
+; Types
+basic-type = "number" / "vector" / "String" / "Int" / "Boolean" / "Object" / "List" / "Dict"
+type = basic-type / identifier
+type-list = "[" WS type *( WS type ) WS "]"
+
+; Channels
+channel-flow = WS "->" WS
+channel-input = WS "<~" WS
+channel-output = WS "~>" WS
+
+; Node elements
+node-name = identifier / "(" WS identifier WS ")" / "[" WS identifier WS "]" / "@" WS operator-symbol
+input-list = identifier *( WS identifier )
+output-list = "[" WS type WS "]" / "."
+
+; Node definition
+node-definition = node-name WS
+                  [ channel-input type-list WS input-list ]
+                  [ channel-output output-list ]
+                  channel-flow node-body
+
+node-body = operation *( channel-flow operation )
+
+; Operations
+operation = expression / node-call / conditional
+expression = identifier / number / binary-operation
+binary-operation = expression WS operator WS expression
+operator = "+" / "-" / "*" / "/"
+node-call = [ arg-list WS ] node-name [ WS output-storage ]
+arg-list = expression *( WS expression )
+output-storage = identifier
+conditional = expression channel-flow operation channel-flow operation
+
+; Operator definition
+operator-symbol = "[]" / "="
+
+; Struct definition
+struct-definition = "struct" WS identifier WS
+                    1*( identifier WS ":" WS type WS )
+
+; Complete Yokai program
+yokai-program = *( WS ( node-definition / struct-definition ) )
