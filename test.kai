@@ -1,0 +1,53 @@
+[ActorBeginOverlap] 
+    ~> [Actor number] OtherActor NewRoundsPerSecond
+    <~ [number] RoundsPerSecond
+    -> OtherActor -> CastToWeapon NewRoundsPerSecond -> Set -> DestroyActor
+
+
+
+
+
+[OnBeginCursorOver] ~> [Component Mesh bool] touchedComp blockMesh overlapping
+    -> overlapping true Set
+    -> blockMesh[0] blockMesh.material[0] CreateDynamicMaterialInstance dmi
+    -> @ "emissive" "#FFFFFF"  SetVectorParameterValue
+    -> blockMesh[0] dmi SetMaterial 
+
+
+[OnEndCursorOver] ~> [Component Mesh bool] touchedComp blockMesh overlapping
+    -> overlapping = false
+    -> blockMesh[0] blockMesh.material[0] CreateDynamicMaterialInstance dmi // output can be stored (dmi here)
+    -> @ "emissive" "#000000"  SetVectorParameterValue
+    -> blockMesh[0] dmi SetMaterial 
+    ?> isActive 
+        +> {some more flow} // true
+        /> . // false, nop
+
+
+// @! - signal of previous node
+(DisplayInventory)
+?> @! +> self.inventoryComponent ForEach i item 
+    @> ?> i < 4
+                +> "W_EquipmentSlot_C" . item.id item.quantity self.inventoryComponent i CreateWidget imgPlaceholder
+                    -> self.BOXGrid @ AddChildToWrapBox 
+                    -> i Switch 
+                        0> imgPlaceholder "sword" false SetBrushFromTexture
+                        1> imgPlaceholder "shield" false SetBrushFromTexture
+                        2> imgPlaceholder "helmet" false SetBrushFromTexture
+                        3> imgPlaceholder "arrow" false SetBrushFromTexture
+                /> .
+        -> "OnInventoryUpdated" self.inventoryComponent BindEvent
+    /> .
+
+
+[OnClickInventory] ~> [Component] inventoryComponent
+-> self.inventoryComponent = inventoryComponent
+-> self.BOXGrid ClearChildren
+-> DisplayInventory
+
+[PreConstruct] ~> [bool] designTime
+-> DisplayInventory
+
+[OnUpdatedInventory]
+-> self.BOXGrid ClearChildren
+-> DisplayInventory
