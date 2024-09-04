@@ -40,4 +40,4 @@
     "struct" <ws> <identifier> <ws>
     (<identifier> <ws> ":" <ws> <type> <ws>)+
 
-<yokai_program> ::= (<ws> (<node_definition> | <struct_definition>))*
+<erdos_program> ::= (<ws> (<node_definition> | <struct_definition>))*

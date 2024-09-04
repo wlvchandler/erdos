@@ -59,4 +59,4 @@ struct-definition = "struct" WS identifier WS
                     1*( identifier WS ":" WS type WS )
 
 ; Complete Yokai program
-yokai-program = *( WS ( node-definition / struct-definition ) )
+erdos-program = *( WS ( node-definition / struct-definition ) )
