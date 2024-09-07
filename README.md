@@ -1,23 +1,3 @@
-<table width="100%">
-<tr>
-<td width="50%">
-
-```.no-copy 
-// Erdos
-[number number number] x y z {1 2 3}
-```
-
-</td>
-<td width="50%">
-
-
-```
-// C-like
-int x = 1;
-int y = 2;
-int z = 3;
-```
-
-</td>
-</tr>
-</table>
+| Erdos | C-like |
+|:------|:-------|
+| <pre>// Erdos<br>[number number number] x y z {1 2 3}</pre> | <pre>// C-like<br>int x = 1;<br>int y = 2;<br>int z = 3;</pre> |
