@@ -1,0 +1,56 @@
+START       = 0x00
+COMMENT     = 0x01
+CHANNEL     = 0x02
+OVERLOAD    = 0x03
+SIGNAL      = 0x04
+CASE        = 0x05
+
+NUM_Z       = 0x10
+NUM_NZ      = 0x11
+NUM_B2_S    = 0x12
+NUM_B2      = 0x13
+NUM_B8_S    = 0x14
+NUM_B8      = 0x15
+NUM_B16_S   = 0x16
+NUM_B16     = 0x17
+NUM_FP      = 0x19
+NUM_PF      = 0x1A
+
+WS          = 0x20
+IDENT       = 0x21
+STR_ESC     = 0x22
+STR_ESC_Q   = 0x23
+STR         = 0x24
+
+SYM_SQUO    = 0x30   //  '
+SYM_DQUO    = 0x31   //  "
+SYM_TICK    = 0x32   //  `
+SYM_DOT     = 0x33   //  .
+SYM_COM     = 0x34   //  ,
+SYM_SEMI    = 0x35   //  ;
+SYM_COL     = 0x36   //  :
+
+SYM_XT      = 0x40   //  <>
+SYM_EQ      = 0x41   //  =
+SYM_EX      = 0x42   //  !
+SYM_QUES    = 0x43   //  ?
+SYM_TL      = 0x44   //  ~
+
+SYM_PM      = 0x50   //  +-
+SYM_STAR    = 0x51   //  *
+SYM_FS      = 0x52   //  /
+
+SYM_AT      = 0x60   //  @
+SYM_HASH    = 0x61   //  #
+SYM_DOLL    = 0x62   //  $
+SYM_MOD     = 0x63   //  %
+SYM_UP      = 0x64   //  ^
+SYM_AND     = 0x65   //  &
+SYM_PIPE    = 0x66   //  |
+
+SYM_BRCO    = 0x90   //  {
+SYM_BRCC    = 0x91   //  }
+SYM_PARO    = 0x92   //  (
+SYM_PARC    = 0x93   //  )
+SYM_BKTO    = 0x94   //  [
+SYM_BKTC    = 0x95   //  ]
