@@ -137,7 +137,7 @@ class Lexer {
         }
         std::cout<<std::endl;
     }
-
+    
     template<typename Table>
     TokenType get_token_type(std::string_view input, const Table& table) const {
         unsigned long long input_hash = hash(input);
@@ -146,7 +146,7 @@ class Lexer {
         });
         return it != table.end() ? it->type : TokenType::IDENTIFIER;
     }
-
+    
     TokenType get_operator_type(std::string_view op) const {
         return get_token_type(op, operator_table);
     }
@@ -160,6 +160,7 @@ class Lexer {
     }
 
 };
+
 
 
 int main(int argc, char** argv) {
