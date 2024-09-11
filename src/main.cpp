@@ -7,6 +7,7 @@
 #include <format>
 #include <algorithm>
 #include <unordered_map>
+#include "lexer/lex.h"
 
 namespace fs = std::filesystem;
 
