@@ -60,6 +60,13 @@ enum class LexerState : uint8_t {
     SYM_BKTC    = 0x95   //  ]
 };
 
+
+// should the inner map be CharacterClass -> LexerState?
+// {LexerState::START,
+//   {{CharacterClass["WS"], LexerState::WS},
+//    {CharacterClass["0-9"], LexerState::NUM_NZ},
+//    {CharacterClass["A-Za-z"], LexerState::IDENT},
+// ?
 const std::unordered_map<LexerState, std::unordered_map<char, LexerState>> TransitionTable {
     {LexerState::START,
      {{{' ', LexerState::WS},
